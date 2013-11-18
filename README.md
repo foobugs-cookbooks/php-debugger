@@ -1,7 +1,7 @@
 Description
 ===========
 
-Repository for foobugs Cookbook zend-debugger.
+Repository for foobugs Cookbook php-debugger.
 
 Direct downlowd URL for Zend Debugger:
 
