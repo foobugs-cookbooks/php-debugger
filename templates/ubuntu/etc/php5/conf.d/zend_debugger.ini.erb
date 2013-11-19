@@ -1,0 +1,6 @@
+[zend_debugger]
+zend_extension=<%= @php_extension_dir %>/ZendDebugger.so
+
+<% @conf.each do |directive, value| %>
+<%= "#{directive}=#{value}" %>
+<% end %>
