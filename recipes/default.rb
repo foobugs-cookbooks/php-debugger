@@ -17,14 +17,8 @@
 # limitations under the License.
 #
 
-# Include php recipe
-include_recipe "php"
-
-# Set PHP extension directory from php-config
-node.default[:php_debugger][:extension_dir] = `php-config --extension-dir`.gsub /\n$/, ""
-
 # Include debugger recipe
-include_recipe "php_debugger::#{node.default[:php_debugger][:name]}"
+include_recipe "php_debugger::#{node[:php_debugger][:name]}"
 
 # CLI alias for php-debug
 template "/etc/profile.d/php-aliases.sh" do

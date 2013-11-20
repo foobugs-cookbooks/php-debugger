@@ -1,5 +1,5 @@
 [xdebug]
-zend_extension=<%= @php_extension_dir %>/xdebug.so
+zend_extension=<%= `php-config --extension-dir`.gsub(/\n$/, "") %>/xdebug.so
 
 <% @conf.each do |directive, value| %>
 <%= "#{directive}=#{value}" %>
