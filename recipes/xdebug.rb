@@ -19,10 +19,12 @@
 
 case node[:php_debugger][:xdebug][:install_method]
 when "package"
-	package "php5-xdebug" do
-	  action :install
-	end
+  package "php5-xdebug" do
+    action :install
+  end
 when "pecl"
+  include_recipe "build-essential"
+
   php_pear "xdebug" do
     action :install
   end
@@ -39,13 +41,18 @@ default_conf = {
   "xdebug.remote_handler" => "dbgp",
   "xdebug.remote_host" => "#{remote_ip}"
 }
-template "/etc/php5/conf.d/xdebug.ini" do
+template "#{node[:php][:ext_conf_dir]}/xdebug.ini" do
   source "etc/php5/conf.d/xdebug.ini.erb"
   owner "root"
   group "root"
   mode "0644"
   variables(
-    :php_extension_dir => node[:php_debugger][:extension_dir],
     :conf => default_conf.merge(node[:php_debugger][:xdebug][:conf])
   )
+end
+link "/etc/php5/conf.d/20-xdebug.ini" do
+  link_type :symbolic
+  to "#{node[:php][:ext_conf_dir]}/xdebug.ini"
+  action :create
+  not_if {node[:php][:ext_conf_dir].include? "/etc/php5/conf.d"}
 end
